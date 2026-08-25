@@ -1,10 +1,10 @@
 # ArchitectIQ | Enterprise Data Architecture Framework & Selection Engine
 
-[![Live Web App](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-00CCFF?style=for-the-badge&logo=github)](https://thesimonk.github.io/data-architect/)
-[![Architecture](https://img.shields.io/badge/Paradigm-Data%20Mesh%20%7C%20Lakehouse%20%7C%20Fabric-059669?style=for-the-badge)](https://github.com/thesimonk/data-architecture)
-[![Tech Stack](https://img.shields.io/badge/Stack-React%2018%20%7C%20TypeScript%20%7C%20Vite%20%7C%20Tailwind-6366F1?style=for-the-badge)](https://github.com/thesimonk/data-architecture)
+[![Live Web App](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-00CCFF?style=for-the-badge&logo=github)](https://YOUR_GITHUB_USERNAME.github.io/data-architecture/)
+[![Architecture](https://img.shields.io/badge/Paradigm-Data%20Mesh%20%7C%20Lakehouse%20%7C%20Fabric-059669?style=for-the-badge)](https://github.com/YOUR_GITHUB_USERNAME/data-architecture)
+[![Tech Stack](https://img.shields.io/badge/Stack-React%2018%20%7C%20TypeScript%20%7C%20Vite%20%7C%20Tailwind-6366F1?style=for-the-badge)](https://github.com/YOUR_GITHUB_USERNAME/data-architecture)
 
-> **Enterprise Data Architecture Decision Engine & Interactive Explorer**  
+> **Enterprise Data Architecture Decision Engine & Interactive Selection Suite**  
 > Designed to help enterprises evaluate, select, and design optimal data architecture frameworks (Medallion Lakehouse, Data Mesh, Data Fabric, Modern Data Stack, Real-Time Kappa/Streaming, and Sovereign Hybrid Multi-Cloud) based on organizational topology, latency, scale, compliance, and AI/ML requirements.
 
 ---
@@ -13,11 +13,11 @@
 
 ### Option 1: Live Interactive Web App (Hosted on GitHub Pages)
 Launch the interactive application directly in your browser:  
-[Launch ArchitectIQ Live Demo](https://thesimonk.github.io/data-architect/)
+[Launch ArchitectIQ Live Demo](https://YOUR_GITHUB_USERNAME.github.io/data-architecture/)
 
 ### Option 2: Clone & Run Locally
 ```bash
-git clone https://github.com/thesimonk/data-architecture.git
+git clone https://github.com/YOUR_GITHUB_USERNAME/data-architecture.git
 cd data-architecture
 npm install
 npm run dev
@@ -56,34 +56,55 @@ flowchart TD
 
 ---
 
-## Key Application Modules
+## 16 Interactive Enterprise Modules
 
-### 1. Interactive Architecture Decision Engine Wizard
-- 7-Dimension assessment evaluating **Team Topology**, **Data Latency**, **Volume & Scale**, **Regulatory Compliance**, **AI/LLM Readiness**, **Technical Skillset**, and **Cloud Strategy**.
-- Dynamic scoring algorithm generating match percentages, architectural rationale, key risks to watch, and a 90-day implementation roadmap.
+### 1. Decision Engine Wizard
+- 7-Dimension assessment matrix with 4 1-click Enterprise Presets (*Global FinTech Streaming Fraud*, *Fortune 500 Data Mesh*, *Healthcare Sovereign*, *E-Commerce GenAI RAG*).
 
-### 2. 7-Tier Interactive Blueprint Canvas
-- End-to-end pipeline visualization across 7 layers:
-  1. **Ingestion & Streaming**: Apache Kafka, Debezium CDC, Fivetran
-  2. **Lakehouse & Storage**: Apache Iceberg, Delta Lake, S3 / ADLS
-  3. **Processing & Compute**: Apache Spark, dbt-core, Ray, Flink
-  4. **Serving & Query Engine**: Trino, ClickHouse, Snowflake, DuckDB
-  5. **Semantic Layer & AI**: Cube.js, Vector DBs (Pinecone, pgvector), LlamaIndex
-  6. **Governance & Lineage**: OpenMetadata, Immuta, Data Contracts
-  7. **Consumption & Action**: Metabase, PowerBI, Reverse ETL, AI Agents
-- Interactive node-click deep dives detailing responsibilities, open-source vs SaaS options, anti-patterns, and production code configs.
+### 2. 7-Tier Blueprint Canvas
+- End-to-end pipeline visualizer across Ingestion, Lakehouse Storage, Compute, Serving, Semantic/AI, Governance, and Consumption.
 
-### 3. Enterprise Paradigm Comparison Matrix
-- Side-by-side comparative table evaluating **Data Mesh**, **Medallion Lakehouse**, **Data Fabric**, **Modern Data Stack**, **Real-Time Kappa**, and **Sovereign Hybrid** across 12 strategic dimensions (TCO, Complexity, Latency, Autonomy, AI Readiness, Cloud Lock-in).
+### 3. Interactive SVG Bezier Cable Graph Canvas
+- Interactive node canvas connected by animated SVG Bezier cables with speed slider (1k to 10M msgs/sec).
 
-### 4. Data Product Contract Modeler
-- Interactive sandbox for defining domain data products, schema assertions, SLA latency, PII masking rules, and generating production-ready YAML data contracts.
+### 4. Data Mesh Domain Topology Modeler
+- Interactive domain boundary creator (Sales, Marketing, Supply Chain, Finance) with an interactive **SVG Inter-Domain Dependency Map**.
 
-### 5. Senior Data Architect Reference Compendium
-- Deep-dive technical articles covering **Apache Iceberg Metadata Trees**, **Enterprise Data Contracts**, **FinOps Cost Optimization**, and **RAG / Vector Pipeline Architecture**.
+### 5. GenAI LLM RAG Pipeline Architect Sandbox
+- Interactive RAG pipeline builder with controls for Chunk Size, Token Overlap, Vector Store selection (pgvector, Pinecone, Milvus), and Hybrid Search ratio.
 
-### 6. Executive Blueprint Export Generator
-- Instant generation and download of formatted Markdown (`.md`) and JSON (`.json`) architecture proposals for executive stakeholders.
+### 6. PACELC Theorem Interactive Engine
+- Evaluates PACELC guarantees (If Partitioned: Availability vs Consistency; Else: Latency vs Consistency) across distributed analytics stores.
+
+### 7. Disaster Recovery & Multi-Region Simulator
+- RPO (seconds) and RTO (hours) simulator recommending Active-Active Multi-Cloud vs Warm Standby replication strategies.
+
+### 8. Zero-Trust Security & ABAC Policy Sandbox
+- Interactive policy generator for column hashing (SHA-256), Format-Preserving Encryption (FPE), and Row-Level Security (RLS) with live DDL output.
+
+### 9. Legacy Data Platform Migration Effort Estimator
+- Calculates person-months, risk index, and 4-phase timeline when migrating legacy monoliths (Hadoop / Teradata / Oracle) to Lakehouse or Data Mesh.
+
+### 10. Enterprise Paradigm Comparison Matrix
+- Side-by-side comparative table evaluating 6 paradigms across 12 strategic dimensions.
+
+### 11. Multi-Axis Architectural Tradeoff Radar
+- SVG spider radar chart visualizing trade-offs across Cost, Simplicity, Scalability, Governance, Autonomy, and AI Readiness.
+
+### 12. Workload Performance & Latency Benchmarks
+- Empirical benchmark metrics comparing P95 query latency, ingestion lag, concurrency limits, and storage efficiency.
+
+### 13. Enterprise FinOps Spend & Scale Simulator
+- Real-time monthly USD cost breakdowns (Storage, Compute, Ingestion, Governance) with interactive sliders.
+
+### 14. Data Quality Assertion & Isolation Sandbox
+- Assertion builder testing `freshness_sla`, `null_rate_tolerance`, and `schema_drift` rules with quarantine logs.
+
+### 15. Data Product Contract Modeler
+- Visual schema contract editor with live YAML spec generator.
+
+### 16. Senior Data Architect Reference Compendium
+- Deep-dive technical articles covering Apache Iceberg internals, Data Contracts, FinOps strategies, PACELC theorem, Zero-Trust ABAC, and Vector RAG pipelines.
 
 ---
 
@@ -95,28 +116,13 @@ data-architecture/
 │   └── workflows/
 │       └── deploy.yml            # Automated GitHub Pages CI/CD Action
 ├── src/
-│   ├── components/
-│   │   ├── Header.tsx            # Navigation bar & portfolio header
-│   │   ├── Wizard/               # 7-step decision wizard & results
-   │   ├── Blueprint/            # 7-tier pipeline canvas & detail modals
-   │   ├── Matrix/               # 12-dimension comparative matrix
-   │   ├── DataProduct/          # Data contract YAML modeler
-   │   ├── Reference/            # Senior architect reference articles
-   │   └── Export/               # Executive report export dialog
-   ├── data/
-   │   ├── paradigms.ts          # Architecture paradigm definitions
-   │   ├── wizardQuestions.ts    # 7 dimension assessment scoring
-   │   ├── blueprintLayers.ts    # 7 pipeline layers & components
-   │   ├── comparisonMatrix.ts   # 12 comparison dimensions
-   │   └── referenceLibrary.ts   # Deep-dive architecture articles
-   ├── types/
-   │   └── architecture.ts       # TypeScript domain models
-   ├── utils/
-   │   ├── recommendationEngine.ts # Dynamic scoring algorithm
-   │   └── exportUtils.ts        # Markdown & JSON exporter
-   ├── App.tsx
-   ├── index.css
-   └── main.tsx
+│   ├── components/               # 16 interactive React enterprise modules
+│   ├── data/                     # Paradigm specs, questions, cloud mappings, presets
+│   ├── types/                    # TypeScript domain models
+│   ├── utils/                    # Recommendation engine, sound synth, export utils
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
 ├── package.json
 ├── vite.config.ts                # Relative base configuration for GitHub Pages
 ├── tsconfig.json

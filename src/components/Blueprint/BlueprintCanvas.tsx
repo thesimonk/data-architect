@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BLUEPRINT_LAYERS } from '../../data/blueprintLayers';
-import { LayerComponent } from '../../types/architecture';
+import { LayerComponent, ParadigmId } from '../../types/architecture';
 import { LayerNode } from './LayerNode';
 import { ComponentDetailModal } from './ComponentDetailModal';
 import { 
@@ -14,6 +14,8 @@ import {
   BrainCircuit, 
   Shield, 
   BarChart3,
+  Play,
+  Pause,
   Sparkles
 } from 'lucide-react';
 
@@ -29,13 +31,23 @@ const ICON_MAP: Record<string, React.ElementType> = {
 
 export const BlueprintCanvas: React.FC = () => {
   const [selectedComponent, setSelectedComponent] = useState<LayerComponent | null>(null);
-  const [stackFilter, setStackFilter] = useState<'all' | 'oss' | 'cloud' | 'saas'>('all');
+  const [selectedParadigmFilter, setSelectedParadigmFilter] = useState<ParadigmId | 'all'>('all');
+  const [isSimulatingStream, setIsSimulatingStream] = useState<boolean>(true);
+
+  const paradigms = [
+    { id: 'all', label: 'All Architectures' },
+    { id: 'medallion-lakehouse', label: 'Medallion Lakehouse' },
+    { id: 'data-mesh', label: 'Data Mesh' },
+    { id: 'realtime-kappa', label: 'Streaming Kappa' },
+    { id: 'modern-data-stack', label: 'Modern Data Stack' },
+    { id: 'sovereign-hybrid', label: 'Sovereign Hybrid' },
+  ];
 
   return (
     <div className="space-y-8 animate-fade-in max-w-7xl mx-auto py-4">
       
-      {/* Canvas Header & Filter Controls */}
-      <div className="p-6 rounded-3xl glass-panel border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      {/* Canvas Header & Interactive Controls */}
+      <div className="p-6 rounded-3xl glass-panel border border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
           <div className="flex items-center space-x-2">
             <span className="p-1.5 rounded-lg bg-cyan-950 text-cyan-400 border border-cyan-800/60">
@@ -46,52 +58,65 @@ export const BlueprintCanvas: React.FC = () => {
             </h1>
           </div>
           <p className="text-xs text-slate-400 mt-1">
-            Interactive pipeline mapping data flow from Ingestion to Governance and Consumption. Click any block for spec details & anti-patterns.
+            Interactive visual architecture mapping end-to-end data flow. Filter components by architectural paradigm or simulate continuous stream velocity.
           </p>
         </div>
 
-        {/* Stack Filter Pills */}
-        <div className="flex items-center space-x-2 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800 text-xs">
-          <Filter className="h-3.5 w-3.5 text-slate-400 ml-2" />
+        {/* Action Controls */}
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Data Stream Simulation Toggle */}
           <button
-            onClick={() => setStackFilter('all')}
-            className={`px-3 py-1 rounded-lg font-medium transition-all ${
-              stackFilter === 'all' ? 'bg-cyan-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'
+            onClick={() => setIsSimulatingStream(!isSimulatingStream)}
+            className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+              isSimulatingStream
+                ? 'bg-cyan-950/80 text-cyan-300 border-cyan-500/50 cyan-glow'
+                : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'
             }`}
           >
-            All Tech Stack
-          </button>
-          <button
-            onClick={() => setStackFilter('oss')}
-            className={`px-3 py-1 rounded-lg font-medium transition-all ${
-              stackFilter === 'oss' ? 'bg-emerald-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            Open Source Core
-          </button>
-          <button
-            onClick={() => setStackFilter('cloud')}
-            className={`px-3 py-1 rounded-lg font-medium transition-all ${
-              stackFilter === 'cloud' ? 'bg-blue-500 text-white font-bold' : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            Cloud Native
+            {isSimulatingStream ? <Pause className="h-3.5 w-3.5 text-cyan-400" /> : <Play className="h-3.5 w-3.5 text-emerald-400" />}
+            <span>{isSimulatingStream ? 'Pause Stream Flow' : 'Simulate Data Stream'}</span>
           </button>
         </div>
       </div>
 
+      {/* Paradigm Filter Selector Bar */}
+      <div className="flex items-center space-x-2 p-2 rounded-2xl glass-panel border border-slate-800 overflow-x-auto text-xs scrollbar-none">
+        <Filter className="h-3.5 w-3.5 text-slate-400 ml-3 shrink-0" />
+        <span className="text-slate-400 font-semibold shrink-0 mr-1">Highlight Paradigm:</span>
+        {paradigms.map((p) => {
+          const isActive = selectedParadigmFilter === p.id;
+          return (
+            <button
+              key={p.id}
+              onClick={() => setSelectedParadigmFilter(p.id as ParadigmId | 'all')}
+              className={`px-3 py-1.5 rounded-xl font-semibold transition-all shrink-0 ${
+                isActive
+                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+              }`}
+            >
+              {p.label}
+            </button>
+          );
+        })}
+      </div>
+
       {/* Animated Pipeline Flow Connector Bar */}
-      <div className="hidden lg:flex items-center justify-between px-6 py-3 rounded-2xl glass-panel border border-slate-800 text-xs text-slate-400 overflow-x-auto">
+      <div className="hidden lg:flex items-center justify-between px-6 py-3 rounded-2xl glass-panel border border-slate-800 text-xs text-slate-400 relative overflow-hidden">
+        {isSimulatingStream && (
+          <div className="animate-particle-flow" />
+        )}
+
         {BLUEPRINT_LAYERS.map((layer, idx) => (
           <React.Fragment key={layer.id}>
-            <div className="flex items-center space-x-2 font-mono text-[11px] text-cyan-300">
+            <div className="flex items-center space-x-2 font-mono text-[11px] text-cyan-300 z-10">
               <span className="w-5 h-5 rounded-full bg-cyan-950 text-cyan-400 flex items-center justify-center font-bold text-[10px] border border-cyan-700">
                 {idx + 1}
               </span>
               <span>{layer.shortName}</span>
             </div>
             {idx < BLUEPRINT_LAYERS.length - 1 && (
-              <div className="flex items-center text-slate-600 animate-pulse">
+              <div className="flex items-center text-slate-600 animate-pulse z-10">
                 <ArrowRight className="h-4 w-4" />
               </div>
             )}

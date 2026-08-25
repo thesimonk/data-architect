@@ -35,81 +35,59 @@ spark.sql("ALTER TABLE catalog.analytics.orders CREATE BRANCH ml_experiment_v2")
     }
   },
   {
-    id: 'data-contracts-specification',
-    category: 'Governance & Contracts',
-    title: 'Enterprise Data Contracts & Schema Evolution Framework',
-    summary: 'Defining formal API-like contracts between operational producers and downstream analytical consumers to prevent breaking changes.',
-    content: `In legacy data architectures, operational software engineers alter database schemas (e.g. dropping a column or changing a timestamp format) without warning, breaking downstream analytical dashboards and ML models.
+    id: 'pacelc-theorem-analytics',
+    category: 'Patterns',
+    title: 'PACELC Theorem in Distributed Analytical Systems',
+    summary: 'Understanding PACELC guarantees (If Partitioned: Availability vs Consistency; Else: Latency vs Consistency) applied to Iceberg, ClickHouse, and Trino.',
+    content: `The CAP theorem only describes system behavior during rare network partitions. PACELC extends CAP by describing system behavior during normal execution.
 
-Data Contracts treat data streams and data products as formal APIs backed by SLA guarantees.
+Formula: If Partitioned (P), choose between Availability (A) and Consistency (C); Else (E), choose between Latency (L) and Consistency (C).
 
-A Production Data Contract specifies:
-- Schema Definition: Strict JSON Schema, Protobuf, or Avro definition.
-- Quality Rules: Assertions that must pass before data is published (e.g. order_total > 0).
-- SLA Commitment: Latency, availability, and change notification lead times (e.g. 30 days notice before breaking changes).
-- PII & Security Classification: Clear labeling of sensitive fields for dynamic masking.`,
+Applying PACELC to Analytics Engines:
+- Apache Iceberg (PC/EC): Guarantees strict read/write consistency during network partitions and snapshot consistency during normal operations.
+- ClickHouse OLAP (PA/EL): Prioritizes sub-second query latency during normal operations and high availability during node partitions.
+- Trino Query Engine (PA/EL): Designed for hyper-fast federated queries where availability and low latency outweigh immediate transactional locks.`,
     keyTakeaways: [
-      'Shift schema enforcement upstream to source microservices and CI/CD pull requests.',
-      'Use Automated Data Contract CLI tools to validate pull requests against consumer schemas.',
-      'Decouple operational schemas from analytical models using CDC and semantic mapping.'
-    ],
-    codeExample: {
-      title: 'Data Contract Spec in YAML',
-      language: 'yaml',
-      code: `dataset: customer_events
-version: 2.1.0
-owner: domain-sales-eng@enterprise.com
-sla:
-  freshness: 5m
-  availability: 99.9%
-schema:
-  - name: event_id
-    type: string
-    required: true
-    primaryKey: true
-  - name: user_email
-    type: string
-    pii: true
-    masking: md5_hash
-  - name: amount
-    type: decimal(10,2)
-    qualityRules:
-      - rule: "amount > 0"`
-    }
-  },
-  {
-    id: 'finops-cost-optimization',
-    category: 'FinOps & Cost',
-    title: 'Enterprise FinOps: Reducing Cloud Warehouse & Lakehouse Spend by 50%',
-    summary: 'Actionable strategies for optimizing Spark memory, Iceberg compaction, Snowflake warehouse auto-suspend, and Trino pushdown predicates.',
-    content: `Cloud analytics infrastructure costs grow non-linearly with data volume unless proactive FinOps practices are enforced.
-
-Key Optimization Vectors:
-1. Small File Problem & Iceberg Bin-Packing: Millions of 10KB Parquet files cause massive S3 API GET charges and slow down query plan generation. Running regular Spark bin-packing compacts small files into optimal 128MB-512MB Parquet blocks.
-2. Predicate Pushdown & Columnar Pruning: Ensure query engines (Trino, Snowflake) read only the exact columns and partitions requested. Never execute SELECT * in automated scheduled jobs.
-3. Compute Autoscaling & Spot Instances: Run Spark batch ETL jobs on AWS EC2 Spot or GCP Preemptible nodes, saving up to 70% compared to On-Demand compute.`,
-    keyTakeaways: [
-      'Schedule automated table maintenance (bin-packing compaction & snapshot cleanup) weekly.',
-      'Enforce dbt model query timeouts and warehouse auto-suspend after 60 seconds of inactivity.',
-      'Store Bronze data in ZSTD-compressed Parquet formats on low-cost object storage.'
+      'Choose PC/EC storage engines (Iceberg, Delta) for financial ledger accuracy.',
+      'Choose PA/EL query engines (ClickHouse, Pinot) for real-time customer dashboards.',
+      'Tunable consistency allows scaling throughput without compromising multi-region integrity.'
     ]
   },
   {
-    id: 'genai-rag-architecture',
-    category: 'AI & Semantic',
-    title: 'Architecting High-Performance RAG & Vector Search Data Pipelines',
-    summary: 'Integrating unstructured document ingestion, chunking strategies, dense vector embeddings, and hybrid BM25 + Vector retrieval.',
-    content: `Generative AI applications require continuous data pipelines to ingest enterprise documents (PDFs, Confluence pages, Slack channels), transform them into vector embeddings, and index them for sub-15ms semantic search.
+    id: 'zero-trust-abac-security',
+    category: 'Governance & Contracts',
+    title: 'Zero-Trust ABAC Data Security with Open Policy Agent (OPA) & Immuta',
+    summary: 'Dynamic column hashing, format-preserving encryption, and tenant row-level filtering applied at query execution runtime.',
+    content: `Traditional static RBAC (creating 500 physical database views for each department) fails at enterprise scale.
 
-Architectural Pipeline Steps:
-1. Unstructured Document Ingestion: Extract raw text from PDFs, HTML, and Markdown using specialized parsers (Unstructured.io, Apache Tika).
-2. Semantic Chunking: Divide documents into meaningful 512-token chunks with 10% overlap to preserve context across boundaries.
-3. Embedding Generation: Pass text chunks to an embedding model (e.g. text-embedding-3-large) to generate 1536-dimensional vectors.
-4. Hybrid Search Retrieval: Combine sparse keyword search (BM25) with dense vector cosine distance to achieve maximum recall accuracy.`,
+Zero-Trust Attribute-Based Access Control (ABAC) dynamically evaluates 4 contextual vectors at query runtime:
+1. User Attributes: Department, Region, Clearance Level.
+2. Resource Attributes: Data Sensitivity Tag (PII, Financial, PCI-DSS).
+3. Environmental Context: Current Time, Client IP Address, Device Security Posture.
+4. Action: Read, Export, Join.
+
+Policy engines intercept Trino / Spark SQL queries to automatically inject format-preserving masking and row filters before byte execution.`,
     keyTakeaways: [
-      'Hybrid search (BM25 + Vector) outperforms vector-only search by 25% on domain-specific jargon.',
-      'Store raw document chunks alongside vector embeddings in metadata-rich stores (pgvector, Milvus).',
-      'Use active metadata line-age to revoke LLM access to document embeddings when source permissions change.'
+      'Eliminate physical view duplication by standardizing on dynamic ABAC masking policies.',
+      'Decouple access policy code from analytical SQL queries using OPA Rego rules.',
+      'Log immutable query audit trails for GDPR and HIPAA compliance verification.'
+    ]
+  },
+  {
+    id: 'multi-region-iceberg-dr',
+    category: 'FinOps & Cost',
+    title: 'Active-Active Multi-Cloud Apache Iceberg Disaster Recovery',
+    summary: 'Architecting zero RPO data lakehouse replication across AWS S3, Azure ADLS, and Google Cloud Storage.',
+    content: `Ensuring multi-region disaster recovery for petabyte data lakes without incurring massive cross-region cloud egress costs requires decoupled metadata replication.
+
+Replication Architecture:
+1. Continuous Log Replication: Dual-write streaming logs using Kafka MirrorMaker 2 across regions.
+2. Snapshot Metadata Sync: Sync Iceberg REST Catalog snapshot manifests incrementally every 30 seconds.
+3. Cold Target Storage: Store secondary data blocks in low-cost Glacier/Coldline storage tiers until disaster failover is triggered.`,
+    keyTakeaways: [
+      'Sync Iceberg metadata manifests incrementally to cut cross-region network egress by 90%.',
+      'Use automated DNS health probes to trigger automated query gateway failover.',
+      'Validate multi-region snapshot consistency using automated background hash checks.'
     ]
   }
 ];
