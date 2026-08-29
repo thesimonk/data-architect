@@ -1,8 +1,8 @@
 # ArchitectIQ | Enterprise Data Architecture Framework & Selection Engine
 
-[![Live Web App](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-00CCFF?style=for-the-badge&logo=github)](https://YOUR_GITHUB_USERNAME.github.io/data-architecture/)
-[![Architecture](https://img.shields.io/badge/Paradigm-Data%20Mesh%20%7C%20Lakehouse%20%7C%20Fabric-059669?style=for-the-badge)](https://github.com/YOUR_GITHUB_USERNAME/data-architecture)
-[![Tech Stack](https://img.shields.io/badge/Stack-React%2018%20%7C%20TypeScript%20%7C%20Vite%20%7C%20Tailwind-6366F1?style=for-the-badge)](https://github.com/YOUR_GITHUB_USERNAME/data-architecture)
+[![Live Web App](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-00CCFF?style=for-the-badge&logo=github)](https://thesimonk.github.io/data-architecture/)
+[![Architecture](https://img.shields.io/badge/Paradigm-Data%20Mesh%20%7C%20Lakehouse%20%7C%20Fabric-059669?style=for-the-badge)](https://github.com/thesimonk/data-architecture)
+[![Tech Stack](https://img.shields.io/badge/Stack-React%2018%20%7C%20TypeScript%20%7C%20Vite%20%7C%20Tailwind-6366F1?style=for-the-badge)](https://github.com/thesimonk/data-architecture)
 
 > **Enterprise Data Architecture Decision Engine & Interactive Selection Suite**  
 > Designed to help enterprises evaluate, select, and design optimal data architecture frameworks (Medallion Lakehouse, Data Mesh, Data Fabric, Modern Data Stack, Real-Time Kappa/Streaming, and Sovereign Hybrid Multi-Cloud) based on organizational topology, latency, scale, compliance, and AI/ML requirements.
@@ -13,11 +13,11 @@
 
 ### Option 1: Live Interactive Web App (Hosted on GitHub Pages)
 Launch the interactive application directly in your browser:  
-[Launch ArchitectIQ Live Demo](https://YOUR_GITHUB_USERNAME.github.io/data-architecture/)
+[Launch ArchitectIQ Live Demo](https://thesimonk.github.io/data-architecture/)
 
 ### Option 2: Clone & Run Locally
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/data-architecture.git
+git clone https://github.com/thesimonk/data-architecture.git
 cd data-architecture
 npm install
 npm run dev
