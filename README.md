@@ -1,7 +1,7 @@
 # ArchitectIQ | Enterprise Data Architecture Framework & Selection Engine
 
-[![Live Web App](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-00CCFF?style=for-the-badge&logo=github)](https://thesimonk.github.io/data-architecture/)
-[![Architecture](https://img.shields.io/badge/Paradigm-Data%20Mesh%20%7C%20Lakehouse%20%7C%20Fabric-059669?style=for-the-badge)](https://github.com/thesimonk/data-architecture)
+[![Live Web App](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-00CCFF?style=for-the-badge&logo=github)](https://thesimonk.github.io/data-architect/)
+[![Architecture](https://img.shields.io/badge/Paradigm-Data%20Mesh%20%7C%20Lakehouse%20%7C%20Fabric-059669?style=for-the-badge)](https://github.com/thesimonk/data-architect)
 [![Tech Stack](https://img.shields.io/badge/Stack-React%2018%20%7C%20TypeScript%20%7C%20Vite%20%7C%20Tailwind-6366F1?style=for-the-badge)](https://github.com/thesimonk/data-architecture)
 
 > **Enterprise Data Architecture Decision Engine & Interactive Selection Suite**  
@@ -13,7 +13,7 @@
 
 ### Option 1: Live Interactive Web App (Hosted on GitHub Pages)
 Launch the interactive application directly in your browser:  
-[Launch ArchitectIQ Live Demo](https://thesimonk.github.io/data-architecture/)
+[Launch ArchitectIQ Live Demo](https://thesimonk.github.io/data-architect/)
 
 ### Option 2: Clone & Run Locally
 ```bash
