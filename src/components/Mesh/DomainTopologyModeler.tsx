@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Network, Plus, Trash2, ShieldCheck, Database, Layers, ArrowUpRight } from 'lucide-react';
+import { Network, Plus, Trash2, ShieldCheck, Database, Layers, ArrowUpRight, Sparkles, CheckCircle2 } from 'lucide-react';
 import { soundEngine } from '../../utils/soundUtils';
 
 interface DomainNode {
@@ -86,35 +86,38 @@ export const DomainTopologyModeler: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in max-w-7xl mx-auto py-4">
-      {/* Header */}
-      <div className="p-6 rounded-3xl glass-panel border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
+    <div className="space-y-8 animate-fade-in max-w-7xl mx-auto py-2">
+      
+      {/* Header Banner */}
+      <div className="p-8 rounded-3xl glass-panel border border-slate-800/80 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 space-y-2">
           <div className="flex items-center space-x-2">
-            <span className="p-1.5 rounded-lg bg-cyan-950 text-cyan-400 border border-cyan-800/60">
-              <Network className="h-4 w-4" />
+            <span className="p-2 rounded-xl bg-cyan-950/90 text-cyan-300 border border-cyan-500/40 shadow-inner">
+              <Network className="h-5 w-5" />
             </span>
-            <h1 className="text-2xl font-extrabold text-white">
-              Data Mesh Domain Topology & Inter-Product Modeler
+            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              Data Mesh Domain Topology & Product Modeler
             </h1>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
-            Model domain ownership boundaries, publish autonomous Data Products, and visualize cross-domain contract dependencies.
+          <p className="text-xs text-slate-300 max-w-3xl leading-relaxed">
+            Model decentralized domain boundaries, publish data product manifests, and validate federated data governance links across the enterprise mesh.
           </p>
         </div>
 
-        {/* Add Domain Input */}
-        <div className="flex items-center space-x-2">
+        {/* Add Domain Input Box */}
+        <div className="flex items-center space-x-2 shrink-0 relative z-10">
           <input
             type="text"
-            placeholder="New Domain Name (e.g. Customer)..."
+            placeholder="New Domain Name (e.g. Risk)..."
             value={newDomainName}
             onChange={(e) => setNewDomainName(e.target.value)}
-            className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-cyan-500 w-60"
+            className="px-4 py-2.5 rounded-2xl bg-slate-950/90 border border-slate-800 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500/60 w-56 font-sans shadow-inner"
           />
           <button
             onClick={handleAddDomain}
-            className="flex items-center space-x-1 px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-xs font-bold text-slate-950 transition-all"
+            className="flex items-center space-x-1.5 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-xs font-extrabold text-white shadow-lg cyan-glow transition-all"
           >
             <Plus className="h-4 w-4" />
             <span>Add Domain</span>
@@ -122,20 +125,23 @@ export const DomainTopologyModeler: React.FC = () => {
         </div>
       </div>
 
-      {/* Grid: Domain Topology SVG Graph (7 cols) vs Domain Manifest Editor (5 cols) */}
+      {/* Grid: Interactive SVG Graph vs Domain Registry */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        {/* Interactive SVG Inter-Domain Dependency Graph (7 cols) */}
-        <div className="lg:col-span-7 p-6 rounded-3xl glass-panel border border-slate-800 space-y-4 bg-slate-950/90 relative overflow-hidden min-h-[420px]">
-          <h3 className="text-sm font-bold text-white border-b border-slate-800 pb-3 flex items-center justify-between">
-            <span className="flex items-center space-x-2">
+        {/* SVG Inter-Domain Graph (7 cols) */}
+        <div className="lg:col-span-7 p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800/80 space-y-4 bg-slate-950/95 relative overflow-hidden min-h-[420px] shadow-2xl">
+          <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
+            <div className="flex items-center space-x-2">
               <Layers className="h-4 w-4 text-cyan-400" />
-              <span>Inter-Domain Data Product Dependency Map</span>
+              <h3 className="text-sm font-extrabold text-white tracking-tight">
+                Federated Mesh Inter-Domain Dependency Graph
+              </h3>
+            </div>
+            <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800">
+              Mesh Active ({domains.length} Domains)
             </span>
-            <span className="text-[10px] font-mono text-cyan-400 font-normal">Federated Mesh Active</span>
-          </h3>
+          </div>
 
-          {/* SVG Canvas showing Domain Nodes and Dependency Links */}
           <svg width="100%" height="320" className="overflow-visible">
             {/* Draw Dependency Lines */}
             {domains.map((dom, idx) => {
@@ -156,11 +162,12 @@ export const DomainTopologyModeler: React.FC = () => {
                       d={pathD}
                       fill="none"
                       stroke={dom.color}
-                      strokeWidth="2"
-                      strokeDasharray="4 4"
+                      strokeWidth="2.5"
+                      strokeDasharray="5 5"
                       opacity="0.6"
+                      className="animate-pulse"
                     />
-                    <circle r="3" fill={dom.color}>
+                    <circle r="4" fill={dom.color}>
                       <animateMotion path={pathD} dur="4s" repeatCount="indefinite" />
                     </circle>
                   </g>
@@ -168,30 +175,30 @@ export const DomainTopologyModeler: React.FC = () => {
               });
             })}
 
-            {/* Draw Domain Cards */}
+            {/* Draw Domain Rectangles */}
             {domains.map((dom, idx) => {
-              const x = 50 + (idx % 2) * 260;
-              const y = 30 + Math.floor(idx / 2) * 130;
+              const x = 40 + (idx % 2) * 260;
+              const y = 25 + Math.floor(idx / 2) * 130;
 
               return (
                 <g key={dom.id} transform={`translate(${x}, ${y})`}>
                   <rect
-                    width="200"
-                    height="85"
-                    rx="16"
-                    fill="#0f172a"
+                    width="210"
+                    height="90"
+                    rx="18"
+                    fill="#0b0f19"
                     stroke={dom.color}
                     strokeWidth="1.5"
                     className="shadow-xl"
                   />
-                  <text x="16" y="24" fill="#f8fafc" fontSize="11" fontWeight="bold">
+                  <text x="16" y="26" fill="#ffffff" fontSize="12" fontWeight="bold">
                     {dom.name}
                   </text>
-                  <text x="16" y="42" fill="#64748b" fontSize="9" className="font-mono">
+                  <text x="16" y="44" fill="#94a3b8" fontSize="9" className="font-mono">
                     Owner: {dom.owner}
                   </text>
-                  <text x="16" y="60" fill={dom.color} fontSize="10" fontWeight="bold">
-                    📦 {dom.dataProducts.length} Data Product(s)
+                  <text x="16" y="64" fill={dom.color} fontSize="10" fontWeight="bold" className="font-mono">
+                    📦 {dom.dataProducts.length} Autonomous Product(s)
                   </text>
                 </g>
               );
@@ -199,19 +206,19 @@ export const DomainTopologyModeler: React.FC = () => {
           </svg>
         </div>
 
-        {/* Domain Data Products Spec Editor (5 cols) */}
-        <div className="lg:col-span-5 p-6 rounded-3xl glass-panel border border-slate-800 space-y-4">
-          <h3 className="text-sm font-bold text-white border-b border-slate-800 pb-3">
+        {/* Domain Data Products Registry Editor (5 cols) */}
+        <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800/80 space-y-4">
+          <h3 className="text-sm font-extrabold text-white border-b border-slate-800/80 pb-4">
             Domain Data Product Registry
           </h3>
 
-          <div className="space-y-4 max-h-[400px] overflow-y-auto pr-1">
+          <div className="space-y-4 max-h-[420px] overflow-y-auto pr-1">
             {domains.map((dom) => (
-              <div key={dom.id} className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
+              <div key={dom.id} className="p-4 rounded-2xl glass-card space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: dom.color }} />
-                    <span className="font-bold text-xs text-slate-100">{dom.name}</span>
+                    <span className="w-3 h-3 rounded-full shadow-md" style={{ backgroundColor: dom.color }} />
+                    <span className="font-extrabold text-xs text-white">{dom.name}</span>
                   </div>
                   {domains.length > 1 && (
                     <button
@@ -223,12 +230,12 @@ export const DomainTopologyModeler: React.FC = () => {
                   )}
                 </div>
 
-                <div className="space-y-1.5 pt-1">
+                <div className="space-y-2">
                   {dom.dataProducts.map((dp, i) => (
-                    <div key={i} className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] space-y-0.5">
+                    <div key={i} className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-[11px] space-y-1">
                       <div className="flex items-center justify-between">
                         <span className="font-mono font-bold text-cyan-300">{dp.name}</span>
-                        <span className="px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-400 text-[9px] font-mono border border-cyan-800">
+                        <span className="px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-400 text-[9px] font-mono border border-cyan-700/60">
                           {dp.sla}
                         </span>
                       </div>

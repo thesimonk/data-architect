@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Cpu, Sparkles, CheckCircle2, Copy, Check, Terminal, Layers } from 'lucide-react';
+import { Cpu, Sparkles, CheckCircle2, Copy, Check, Terminal, Layers, Sliders } from 'lucide-react';
 import { soundEngine } from '../../utils/soundUtils';
 
 export const RagArchitectSandbox: React.FC = () => {
@@ -44,50 +44,54 @@ vector_db = ${vectorStore === 'pgvector' ? 'PGVector' : 'Pinecone'}.from_documen
   };
 
   return (
-    <div className="space-y-8 animate-fade-in max-w-7xl mx-auto py-4">
-      {/* Header */}
-      <div className="p-6 rounded-3xl glass-panel border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
+    <div className="space-y-8 animate-fade-in max-w-7xl mx-auto py-2">
+      
+      {/* Header Banner */}
+      <div className="p-8 rounded-3xl glass-panel border border-slate-800/80 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 space-y-2">
           <div className="flex items-center space-x-2">
-            <span className="p-1.5 rounded-lg bg-indigo-950 text-indigo-400 border border-indigo-800/60">
-              <Cpu className="h-4 w-4" />
+            <span className="p-2 rounded-xl bg-indigo-950/90 text-indigo-300 border border-indigo-500/40 shadow-inner">
+              <Cpu className="h-5 w-5" />
             </span>
-            <h1 className="text-2xl font-extrabold text-white">
-              GenAI LLM RAG Pipeline Architect Sandbox
+            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              GenAI RAG Pipeline Architect Sandbox
             </h1>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
-            Architect unstructured document ingestion, semantic chunking, dense vector embeddings, and hybrid search (BM25 + Vector) for LLM Agents.
+          <p className="text-xs text-slate-300 max-w-3xl leading-relaxed">
+            Tune document chunking windows, dense vector dimensions, hybrid search weights (BM25 + Dense Vector), and vector database providers for enterprise AI workloads.
           </p>
         </div>
 
-        <div className="flex items-center space-x-3 bg-slate-900/90 p-3 rounded-2xl border border-slate-800 text-xs">
+        {/* Live Metrics Telemetry Card */}
+        <div className="flex items-center space-x-4 bg-slate-950/90 p-4 rounded-3xl border border-indigo-500/30 cyan-glow shadow-2xl shrink-0 relative z-10">
           <div>
-            <span className="text-[10px] uppercase font-bold text-slate-400 block">Est. Latency</span>
-            <span className="font-mono text-sm font-extrabold text-cyan-400">{estimatedLatencyMs} ms</span>
+            <span className="text-[10px] font-mono font-bold uppercase text-slate-400 block">Est. Query Latency</span>
+            <span className="font-mono text-base font-black text-cyan-300">{estimatedLatencyMs} ms</span>
           </div>
-          <div className="border-l border-slate-800 pl-3">
-            <span className="text-[10px] uppercase font-bold text-slate-400 block">Recall @ K=10</span>
-            <span className="font-mono text-sm font-extrabold text-emerald-400">{estimatedRecallPercentage}%</span>
+          <div className="border-l border-slate-800/80 pl-4">
+            <span className="text-[10px] font-mono font-bold uppercase text-slate-400 block">Recall @ K=10</span>
+            <span className="font-mono text-base font-black text-emerald-400">{estimatedRecallPercentage}%</span>
           </div>
         </div>
       </div>
 
-      {/* Grid: Controls Sliders (5 cols) vs Live RAG Code Spec (7 cols) */}
+      {/* Grid: Controls Sliders (5 cols) vs Code Spec (7 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* Controls Slider Panel (5 cols) */}
-        <div className="lg:col-span-5 p-6 rounded-3xl glass-panel border border-slate-800 space-y-6">
-          <h3 className="text-base font-bold text-white border-b border-slate-800 pb-3 flex items-center space-x-2">
-            <Sparkles className="h-4 w-4 text-indigo-400" />
-            <span>RAG Ingestion Parameters</span>
+        <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800/80 space-y-6">
+          <h3 className="text-sm font-extrabold text-white border-b border-slate-800/80 pb-4 flex items-center space-x-2">
+            <Sliders className="h-4 w-4 text-indigo-400" />
+            <span>RAG Pipeline Hyperparameters</span>
           </h3>
 
           {/* Slider 1: Chunk Size */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-semibold text-slate-300">Semantic Chunk Size</span>
-              <span className="font-mono text-cyan-400 font-bold">{chunkSize} Tokens</span>
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between text-xs font-mono">
+              <span className="font-bold text-slate-300">Semantic Chunk Size</span>
+              <span className="font-mono font-black text-cyan-300">{chunkSize} Tokens</span>
             </div>
             <input
               type="range"
@@ -96,15 +100,15 @@ vector_db = ${vectorStore === 'pgvector' ? 'PGVector' : 'Pinecone'}.from_documen
               step="128"
               value={chunkSize}
               onChange={(e) => setChunkSize(Number(e.target.value))}
-              className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+              className="w-full h-2 bg-slate-900 rounded-lg appearance-none cursor-pointer accent-cyan-400 border border-slate-800"
             />
           </div>
 
           {/* Slider 2: Token Overlap */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-semibold text-slate-300">Chunk Overlap Window</span>
-              <span className="font-mono text-cyan-400 font-bold">{overlapTokens} Tokens ({Math.round(overlapTokens / chunkSize * 100)}%)</span>
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between text-xs font-mono">
+              <span className="font-bold text-slate-300">Chunk Overlap Window</span>
+              <span className="font-mono font-black text-cyan-300">{overlapTokens} Tokens ({Math.round(overlapTokens / chunkSize * 100)}%)</span>
             </div>
             <input
               type="range"
@@ -113,17 +117,17 @@ vector_db = ${vectorStore === 'pgvector' ? 'PGVector' : 'Pinecone'}.from_documen
               step="16"
               value={overlapTokens}
               onChange={(e) => setOverlapTokens(Number(e.target.value))}
-              className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+              className="w-full h-2 bg-slate-900 rounded-lg appearance-none cursor-pointer accent-cyan-400 border border-slate-800"
             />
           </div>
 
-          {/* Vector Store Selection */}
+          {/* Target Vector Store Dropdown */}
           <div className="space-y-2">
-            <label className="block text-xs font-semibold text-slate-300">Target Vector Store</label>
+            <label className="block text-xs font-mono font-bold text-slate-300 uppercase">Target Vector Store</label>
             <select
               value={vectorStore}
               onChange={(e) => setVectorStore(e.target.value as any)}
-              className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-cyan-300 focus:outline-none focus:border-cyan-500"
+              className="w-full p-3 rounded-2xl bg-slate-950 border border-slate-800 text-xs font-mono text-cyan-300 focus:outline-none focus:border-cyan-500/60 shadow-inner"
             >
               <option value="pgvector">pgvector (PostgreSQL Extension - Zero Extra Infra)</option>
               <option value="pinecone">Pinecone Managed SaaS (Sub-10ms Index)</option>
@@ -132,11 +136,11 @@ vector_db = ${vectorStore === 'pgvector' ? 'PGVector' : 'Pinecone'}.from_documen
             </select>
           </div>
 
-          {/* Slider 3: Hybrid BM25 Weight */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-semibold text-slate-300">Hybrid Search Ratio (Sparse vs Dense)</span>
-              <span className="font-mono text-emerald-400 font-bold">
+          {/* Slider 3: Hybrid Search Ratio */}
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between text-xs font-mono">
+              <span className="font-bold text-slate-300">Hybrid Search Balance</span>
+              <span className="font-mono font-black text-emerald-400">
                 {Math.round(hybridBm25Weight * 100)}% BM25 / {Math.round((1 - hybridBm25Weight) * 100)}% Vector
               </span>
             </div>
@@ -147,28 +151,30 @@ vector_db = ${vectorStore === 'pgvector' ? 'PGVector' : 'Pinecone'}.from_documen
               step="0.05"
               value={hybridBm25Weight}
               onChange={(e) => setHybridBm25Weight(Number(e.target.value))}
-              className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-400"
+              className="w-full h-2 bg-slate-900 rounded-lg appearance-none cursor-pointer accent-emerald-400 border border-slate-800"
             />
           </div>
         </div>
 
         {/* Live Code Spec Viewer (7 cols) */}
-        <div className="lg:col-span-7 p-6 rounded-3xl glass-panel border border-slate-800 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <h3 className="text-sm font-bold text-white flex items-center space-x-2">
+        <div className="lg:col-span-7 p-6 sm:p-8 rounded-3xl glass-panel border border-slate-800/80 space-y-4 shadow-2xl">
+          <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
+            <div className="flex items-center space-x-2">
               <Terminal className="h-4 w-4 text-cyan-400" />
-              <span>Production RAG Pipeline Specification</span>
-            </h3>
+              <h3 className="text-sm font-extrabold text-white">
+                Production LangChain RAG Spec
+              </h3>
+            </div>
             <button
               onClick={handleCopyCode}
-              className="flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 transition-all"
+              className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-bold text-slate-300 transition-all"
             >
               {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
               <span>{copied ? 'Copied' : 'Copy Code'}</span>
             </button>
           </div>
 
-          <pre className="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-xs font-mono text-cyan-300 overflow-x-auto max-h-[420px]">
+          <pre className="p-5 rounded-2xl bg-slate-950 border border-slate-800/80 text-xs font-mono text-cyan-300 overflow-x-auto max-h-[420px] leading-relaxed shadow-inner">
             <code>{codeSnippet}</code>
           </pre>
         </div>
