@@ -17,7 +17,7 @@ Launch the interactive application directly in your browser:
 
 ### Option 2: Clone & Run Locally
 ```bash
-git clone https://github.com/thesimonk/data-architecture.git
+git clone https://github.com/thesimonk/data-architect.git
 cd data-architecture
 npm install
 npm run dev
